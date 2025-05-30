@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Filter, Grid, List, Search } from 'lucide-react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Filter, Grid, List, Search, ArrowLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import EventCard from '@/components/EventCard';
@@ -11,10 +10,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const Browse = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
   const [sortBy, setSortBy] = useState('date');
+  const [priceFilter, setPriceFilter] = useState('all');
+  const [popularityFilter, setPopularityFilter] = useState('all');
 
   const allEvents = [
     {
@@ -153,7 +155,28 @@ const Browse = () => {
     const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          event.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    
+    // Price filter logic
+    const matchesPrice = (() => {
+      if (priceFilter === 'all') return true;
+      if (priceFilter === 'free') return event.price === 0;
+      if (priceFilter === 'paid') return event.price > 0;
+      if (priceFilter === 'under-50') return event.price < 50;
+      if (priceFilter === '50-100') return event.price >= 50 && event.price <= 100;
+      if (priceFilter === 'over-100') return event.price > 100;
+      return true;
+    })();
+
+    // Popularity filter logic (based on attendance)
+    const matchesPopularity = (() => {
+      if (popularityFilter === 'all') return true;
+      if (popularityFilter === 'high') return event.attendees > 150;
+      if (popularityFilter === 'medium') return event.attendees >= 50 && event.attendees <= 150;
+      if (popularityFilter === 'low') return event.attendees < 50;
+      return true;
+    })();
+
+    return matchesSearch && matchesCategory && matchesPrice && matchesPopularity;
   });
 
   const getCategoryDisplayName = (category: string) => {
@@ -162,13 +185,29 @@ const Browse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+
       <Header />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/')}
+          className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-6 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg hover:bg-white/90 transition-all"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Home</span>
+        </button>
+
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             {selectedCategory !== 'all' ? getCategoryDisplayName(selectedCategory) : 'Browse Events'}
           </h1>
           <p className="text-gray-600">
@@ -177,8 +216,8 @@ const Browse = () => {
         </div>
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-lg p-6 mb-8 shadow-sm">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 mb-8 shadow-sm border border-white/20">
+          <div className="flex flex-col gap-4">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -190,8 +229,8 @@ const Browse = () => {
               />
             </div>
 
-            {/* Filters */}
-            <div className="flex items-center gap-4">
+            {/* Filters Row */}
+            <div className="flex flex-wrap items-center gap-4">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-48">
                   <SelectValue />
@@ -202,6 +241,31 @@ const Browse = () => {
                       {category.label}
                     </SelectItem>
                   ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={priceFilter} onValueChange={setPriceFilter}>
+                <SelectTrigger className="w-36">
+                  <SelectValue placeholder="Price" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Prices</SelectItem>
+                  <SelectItem value="free">Free</SelectItem>
+                  <SelectItem value="under-50">Under 50 SUI</SelectItem>
+                  <SelectItem value="50-100">50-100 SUI</SelectItem>
+                  <SelectItem value="over-100">Over 100 SUI</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={popularityFilter} onValueChange={setPopularityFilter}>
+                <SelectTrigger className="w-36">
+                  <SelectValue placeholder="Popularity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Events</SelectItem>
+                  <SelectItem value="high">High (150+ people)</SelectItem>
+                  <SelectItem value="medium">Medium (50-150 people)</SelectItem>
+                  <SelectItem value="low">Low (Under 50 people)</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -217,7 +281,7 @@ const Browse = () => {
               </Select>
 
               {/* View Toggle */}
-              <div className="flex border rounded-lg">
+              <div className="flex border rounded-lg ml-auto">
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'ghost'}
                   size="sm"

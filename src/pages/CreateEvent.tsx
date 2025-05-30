@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
-import { Calendar, MapPin, Clock, Image as ImageIcon, ArrowLeft } from 'lucide-react';
+import { Calendar, MapPin, Clock, Image as ImageIcon, ArrowLeft, Ticket, UserCheck, Users, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -165,127 +165,131 @@ const CreateEvent = () => {
                     )}
                   />
 
-                  {/* Date and Time */}
+                  {/* Date and Time - Straight Layout */}
                   <div className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="w-5 h-5 text-blue-600" />
-                      <span className="font-medium">Start</span>
-                      <div className="flex items-center space-x-2">
-                        <FormField
-                          control={form.control}
-                          name="startDate"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <FormControl>
-                                    <Button
-                                      variant="outline"
-                                      className={cn(
-                                        "w-40 justify-start text-left font-normal",
-                                        !field.value && "text-muted-foreground"
-                                      )}
-                                    >
-                                      {field.value ? (
-                                        format(field.value, "EEE, MMM dd")
-                                      ) : (
-                                        <span>Pick a date</span>
-                                      )}
-                                    </Button>
-                                  </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                  <CalendarComponent
-                                    mode="single"
-                                    selected={field.value}
-                                    onSelect={field.onChange}
-                                    initialFocus
-                                    className="p-3 pointer-events-auto"
+                    <div className="grid grid-cols-1 gap-4">
+                      {/* Start Date/Time */}
+                      <div className="flex items-center space-x-3">
+                        <Calendar className="w-5 h-5 text-blue-600" />
+                        <span className="font-medium min-w-[40px]">Start</span>
+                        <div className="flex items-center space-x-2 flex-1">
+                          <FormField
+                            control={form.control}
+                            name="startDate"
+                            render={({ field }) => (
+                              <FormItem className="flex-1">
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <FormControl>
+                                      <Button
+                                        variant="outline"
+                                        className={cn(
+                                          "justify-start text-left font-normal",
+                                          !field.value && "text-muted-foreground"
+                                        )}
+                                      >
+                                        {field.value ? (
+                                          format(field.value, "EEE, MMM dd")
+                                        ) : (
+                                          <span>Pick a date</span>
+                                        )}
+                                      </Button>
+                                    </FormControl>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-auto p-0" align="start">
+                                    <CalendarComponent
+                                      mode="single"
+                                      selected={field.value}
+                                      onSelect={field.onChange}
+                                      initialFocus
+                                      className="p-3 pointer-events-auto"
+                                    />
+                                  </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          
+                          <FormField
+                            control={form.control}
+                            name="startTime"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    type="time"
+                                    className="w-32"
+                                    {...field}
                                   />
-                                </PopoverContent>
-                              </Popover>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        <FormField
-                          control={form.control}
-                          name="startTime"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  type="time"
-                                  className="w-32"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center space-x-3">
-                      <Clock className="w-5 h-5 text-blue-600" />
-                      <span className="font-medium">End</span>
-                      <div className="flex items-center space-x-2">
-                        <FormField
-                          control={form.control}
-                          name="endDate"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <FormControl>
-                                    <Button
-                                      variant="outline"
-                                      className={cn(
-                                        "w-40 justify-start text-left font-normal",
-                                        !field.value && "text-muted-foreground"
-                                      )}
-                                    >
-                                      {field.value ? (
-                                        format(field.value, "EEE, MMM dd")
-                                      ) : (
-                                        <span>Pick a date</span>
-                                      )}
-                                    </Button>
-                                  </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                  <CalendarComponent
-                                    mode="single"
-                                    selected={field.value}
-                                    onSelect={field.onChange}
-                                    initialFocus
-                                    className="p-3 pointer-events-auto"
+                      {/* End Date/Time */}
+                      <div className="flex items-center space-x-3">
+                        <Clock className="w-5 h-5 text-blue-600" />
+                        <span className="font-medium min-w-[40px]">End</span>
+                        <div className="flex items-center space-x-2 flex-1">
+                          <FormField
+                            control={form.control}
+                            name="endDate"
+                            render={({ field }) => (
+                              <FormItem className="flex-1">
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <FormControl>
+                                      <Button
+                                        variant="outline"
+                                        className={cn(
+                                          "justify-start text-left font-normal",
+                                          !field.value && "text-muted-foreground"
+                                        )}
+                                      >
+                                        {field.value ? (
+                                          format(field.value, "EEE, MMM dd")
+                                        ) : (
+                                          <span>Pick a date</span>
+                                        )}
+                                      </Button>
+                                    </FormControl>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-auto p-0" align="start">
+                                    <CalendarComponent
+                                      mode="single"
+                                      selected={field.value}
+                                      onSelect={field.onChange}
+                                      initialFocus
+                                      className="p-3 pointer-events-auto"
+                                    />
+                                  </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          
+                          <FormField
+                            control={form.control}
+                            name="endTime"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    type="time"
+                                    className="w-32"
+                                    {...field}
                                   />
-                                </PopoverContent>
-                              </Popover>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        <FormField
-                          control={form.control}
-                          name="endTime"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  type="time"
-                                  className="w-32"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -330,13 +334,16 @@ const CreateEvent = () => {
                     )}
                   />
 
-                  {/* Event Options */}
+                  {/* Event Options with Colorful Icons */}
                   <div className="space-y-4">
                     <h3 className="font-semibold text-gray-900">Event Options</h3>
                     
                     {/* Tickets */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                          <Ticket className="w-4 h-4 text-white" />
+                        </div>
                         <span className="font-medium">Tickets</span>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -362,7 +369,12 @@ const CreateEvent = () => {
 
                     {/* Require Approval */}
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Require Approval</span>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                          <UserCheck className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="font-medium">Require Approval</span>
+                      </div>
                       <FormField
                         control={form.control}
                         name="requireApproval"
@@ -381,7 +393,12 @@ const CreateEvent = () => {
 
                     {/* Capacity */}
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">Capacity</span>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                          <Users className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="font-medium">Capacity</span>
+                      </div>
                       <div className="flex items-center space-x-2">
                         <FormField
                           control={form.control}
@@ -403,29 +420,38 @@ const CreateEvent = () => {
                     </div>
 
                     {/* Category */}
-                    <FormField
-                      control={form.control}
-                      name="category"
-                      render={({ field }) => (
-                        <FormItem>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select category" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="technology">Technology</SelectItem>
-                              <SelectItem value="workshop">Workshop</SelectItem>
-                              <SelectItem value="networking">Networking</SelectItem>
-                              <SelectItem value="conference">Conference</SelectItem>
-                              <SelectItem value="meetup">Meetup</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                          <Tag className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="font-medium">Category</span>
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="category"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="w-48">
+                                  <SelectValue placeholder="Select category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="technology">Technology</SelectItem>
+                                <SelectItem value="art-design">Art & Design</SelectItem>
+                                <SelectItem value="music">Music</SelectItem>
+                                <SelectItem value="networking">Networking</SelectItem>
+                                <SelectItem value="gaming">Gaming</SelectItem>
+                                <SelectItem value="finance">Finance</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                   </div>
 
                   {/* Create Event Button */}
