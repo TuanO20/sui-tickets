@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Search, Sparkles, Calendar, Users } from 'lucide-react';
+import { Search, Sparkles, Tickets, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -57,7 +57,7 @@ const Hero = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-2xl mx-auto pt-8">
             <div className="text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mx-auto mb-2">
-                <Calendar className="w-6 h-6 text-blue-600" />
+                <Tickets className="w-6 h-6 text-blue-600" />
               </div>
               <div className="text-2xl font-bold text-gray-900">2,500+</div>
               <div className="text-sm text-gray-600">Events Created</div>

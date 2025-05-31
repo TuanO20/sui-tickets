@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Calendar, Twitter, Github, MessageCircle, Mail } from 'lucide-react';
+import { Tickets, Twitter, Github, MessageCircle, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -11,9 +11,9 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-white" />
+                <Tickets className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold">SuiEvents</span>
+              <span className="text-xl font-bold">SuiTickets</span>
             </div>
             <p className="text-gray-400 text-sm">
               The next-generation event platform powered by Sui blockchain. 
@@ -64,7 +64,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
-              © 2024 SuiEvents. All rights reserved.
+              © 2025 SuiTickets. All rights reserved.
             </p>
             <div className="flex items-center space-x-4 text-sm text-gray-400">
               <span>Powered by</span>

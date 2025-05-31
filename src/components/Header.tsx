@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Wallet, Plus, Search } from 'lucide-react';
+import { Tickets, Wallet, Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -12,16 +12,20 @@ const Header = () => {
     navigate('/create-event');
   };
 
+  const handleBrowseEvents = () => {
+    navigate('/browse');
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-1000 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
           <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <Calendar className="w-5 h-5 text-white" />
+            <Tickets className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            SuiEvents
+            SuiTickets
           </span>
         </div>
 
@@ -38,7 +42,7 @@ const Header = () => {
 
         {/* Navigation */}
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" className="hidden md:flex">
+          <Button variant="ghost" className="hidden md:flex" onClick={handleBrowseEvents}>
             Browse Events
           </Button>
           <Button variant="outline" className="flex items-center space-x-2" onClick={handleCreateEvent}>

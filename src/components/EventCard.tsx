@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, MapPin, Users, Coins } from 'lucide-react';
+import { Tickets, MapPin, Users, Coins } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -37,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
     >
       <div className="relative">
         <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-          <Calendar className="w-12 h-12 text-blue-600 opacity-50" />
+          <Tickets className="w-12 h-12 text-blue-600 opacity-50" />
         </div>
         <Badge className="absolute top-3 left-3 bg-white/90 text-gray-700 hover:bg-white">
           {event.category}
@@ -61,7 +61,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           
           <div className="space-y-2 text-sm text-gray-600">
             <div className="flex items-center space-x-2">
-              <Calendar className="w-4 h-4 text-blue-600" />
+              <Tickets className="w-4 h-4 text-blue-600" />
               <span>{event.date} at {event.time}</span>
             </div>
             <div className="flex items-center space-x-2">
