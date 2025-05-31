@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tickets, Wallet, Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ConnectButton } from '@mysten/dapp-kit';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Header = () => {
   const handleBrowseEvents = () => {
     navigate('/browse');
   };
+
 
   return (
     <header className="sticky top-1000 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -49,10 +51,9 @@ const Header = () => {
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Create Event</span>
           </Button>
-          <Button className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-            <Wallet className="w-4 h-4" />
-            <span className="hidden sm:inline">Connect Wallet</span>
-          </Button>
+          <ConnectButton
+            className="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+          />
         </div>
       </div>
     </header>

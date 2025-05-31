@@ -71,11 +71,11 @@ function App() {
               <main className="flex-grow container mx-auto px-4 py-8">
                 <Routes>
                   <Route path="/" element={<Index />} />
-      //           <Route path="/event/:id" element={<EventDetails />} />
-      //           <Route path="/create-event" element={<CreateEvent />} />
-      //           <Route path="/browse" element={<Browse />} />
-      //           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-      //           <Route path="*" element={<NotFound />} />
+                  <Route path="/event/:id" element={<EventDetails />} />
+                  <Route path="/create-event" element={<CreateEvent />} />
+                  <Route path="/browse" element={<Browse />} />
+                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
               <Footer/>
